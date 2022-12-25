@@ -31,15 +31,19 @@ while cap.isOpened():
     body = cv.CascadeClassifier('haarcascade_fullbody.xml')
     results = body.detectMultiScale(frame4, scaleFactor=1.1, minNeighbors=4)
 
+    isDetected = False
     for (x, y, w, h) in results:
 #       # display the detected people in the colour picture
         cv.rectangle(frame1, (x, y), (x + w, y + h),
                           (0, 255, 0), 2)
         cv.putText(frame1, 'human', (x - 10, y - 10), cv.FONT_HERSHEY_PLAIN, 1, 
                           (0, 255, 0), 2)
+        isDetected = True
 
     # video displaying
     cv.imshow('video', frame1)
+    if isDetected:
+        cv.waitKey(10000)
 
     if cv.waitKey(1) == ord('q'):
         break
